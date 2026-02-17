@@ -1,5 +1,21 @@
 # Mini CRM (Laravel + Vue.js)
 
+## Requirements
+
+### Backend
+- PHP >= 8.1
+- Laravel 10.x (or your installed version)
+- Composer
+- MySQL 8.x
+
+### Frontend
+- Node.js 20.19+ OR 22.12+
+- npm 10+
+- Vue 3 (Beta)
+- Vite (Beta)
+- Tailwind CSS 4.x
+- TypeScript 5.9.x
+
 A simple Mini CRM application built using **Laravel (Backend API)** and **Vue.js (Frontend)**.
 
 ## 🚀 Features
