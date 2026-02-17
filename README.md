@@ -38,6 +38,16 @@ DB_DATABASE=minicrm
 DB_USERNAME=root
 DB_PASSWORD=
 
+SMTP Used brevo
+MAIL_MAILER=smtp
+MAIL_HOST=smtp-relay.brevo.com
+MAIL_PORT=587
+MAIL_USERNAME=a1febc001@smtp-brevo.com
+MAIL_PASSWORD=xsmtpsib-0c9b470d70377526da32d4b200a24ee268e579cb51eb4a7065adf7ef4f342e20-Ejhf96TPz8lJyIZs
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="suriya@handletechlabs.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
 php artisan migrate
 php artisan serve
 
@@ -47,6 +57,9 @@ cd frontend
 npm install
 npm run dev
 
-API Connection .env
+API Connection create .env
 VITE_API_URL=http://127.0.0.1:8000/api
+VITE_ADMIN_ROLE=1
+VITE_USER_ROLE=2
+VITE_MANAGER_ROLE=3
 
