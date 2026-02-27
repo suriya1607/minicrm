@@ -4,3 +4,24 @@ export const fetchRoles = async (url: string) => {
   const res = await api.get(url)
   return res.data.data
 }
+
+export const setPassword = async (url: string, data: any) => {
+  const res = await api.post(url, data)
+  return res.data
+}
+
+export const createUser = async (data: any) => {
+  const res = await api.post('/users', data);
+  return res.data;
+};
+
+export const updateUser = async (id: string | number, data: any) => {
+  const res = await api.put(`/users/${id}`, data); // or patch
+  return res.data;
+};
+
+export const fetchUser = async (url: string) => {
+  const res = await api.get(url)
+  return res.data.data
+}
+

@@ -76,4 +76,24 @@ class AuthController extends Controller
     {
         return response()->json($request->user());
     }
+
+    public function setPassword(Request $request)
+    {
+        $data = $request->validate([
+            'token' => 'required',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        try {
+            $userId = \Illuminate\Support\Facades\Crypt::decryptString($data['token']);
+            $user = User::findOrFail($userId);
+            $user->password = Hash::make($data['password']);
+            $user->email_verified_at = now();
+            $user->save();
+
+            return response()->json(['message' => 'Password set successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Invalid token'], 400);
+        }
+    }
 }

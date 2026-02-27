@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\RoleController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/set-password', [AuthController::class, 'setPassword']);
+
 Route::get('/email/verify/{id}/{hash}', function ($id, $hash, Request $request) {
 
     $user = User::findOrFail($id);
@@ -30,6 +32,6 @@ Route::get('/email/verify/{id}/{hash}', function ($id, $hash, Request $request) 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
-    Route::get('/users', [UserController::class, 'index']);
+    Route::resource('users', UserController::class);
     Route::get('/roles', [RoleController::class, 'index']);
 });

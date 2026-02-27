@@ -1,10 +1,23 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue"
+import { useRouter } from "vue-router"
+
+const router = useRouter()
+
+const handleAction = (action: ActionItem) => {
+  if (action.route) {
+    router.push(action.route)
+  } else {
+    emit("action", { action: action.key, row: props.row })
+  }
+  close()
+}
 
 interface ActionItem {
   label: string
   key: string
   danger?: boolean
+  route?: string
 }
 
 const props = defineProps<{
@@ -45,7 +58,7 @@ onBeforeUnmount(() => document.removeEventListener("click", handleClickOutside))
       <button
         v-for="action in actions"
         :key="action.key"
-        @click="$emit('action', { action: action.key, row })"
+        @click="handleAction(action)"
         class="block w-full text-left px-3 py-2 hover:bg-gray-100"
         :class="action.danger ? 'text-red-600' : ''"
       >

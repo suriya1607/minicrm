@@ -2,17 +2,6 @@
   <AuthLayout>
     <BaseLoader v-if="loading" />
 
-    <div class="flex items-center justify-center gap-2 mb-8">
-      <div
-        class="w-10 h-10 bg-gradient-to-br from-teal-400 to-blue-500 rounded-lg flex items-center justify-center"
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M12 4L4 10v11l8-6 8 6V10l-8-6z" fill="white" />
-        </svg>
-      </div>
-      <h1 class="text-2xl font-bold text-gray-800"> {{ t.common.appname }}</h1>
-    </div>
-
     <div v-if="isRegistered" class="text-center p-6">
       <h2 class="text-xl font-bold text-green-600 mb-2">
         Registration Successful 

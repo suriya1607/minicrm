@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router";
 import Login from "@/views/auth/Login.vue";
 import Register from "@/views/auth/Register.vue";
+import Setpassword from "@/views/auth/Setpassword.vue";
 import Dashboard from "@/views/admin/Dashboard.vue";
 import AppLayout from '@/components/layout/AppLayout.vue'
 import Customers from '@/views/admin/Customers.vue'
@@ -16,6 +17,7 @@ const routes: Array<RouteRecordRaw> = [
   { path: "/", redirect: "/login" },
   { path: "/login", component: Login },
   { path: "/register", component: Register },
+  { path: "/set-password", component: Setpassword },
     // Admin routes
   {
     path: '/admin',
@@ -25,8 +27,9 @@ const routes: Array<RouteRecordRaw> = [
       { path: 'dashboard', component: Dashboard },
       { path: 'customers', component: Customers },
       { path: 'settings', component: Settings },
-      { path: 'users', component: Users },
+      { path: 'users', name: 'admin-User', component: Users },
       { path: 'users/create', component: UserCreate },
+      { path: 'users/:id/edit', component: UserCreate },
     ]
   },
 

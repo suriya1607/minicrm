@@ -16,7 +16,7 @@
   <BaseActionMenu
     :row="row"
     :actions="[
-      { label: 'Edit', key: 'edit' },
+      { label: 'Edit', key: 'edit' , route: `/admin/users/${row.id}/edit`},
       { label: 'Delete', key: 'delete', danger: true }
     ]"
   />
@@ -61,7 +61,7 @@ const columns = [
   { key: 'name', label: 'Name' },
   { key: 'email', label: 'Email' },
   { key: 'phone', label: 'Phone' },
-  { key: 'role_id', label: 'Role' },
+  { key: 'role', label: 'Role' },
   { key: 'created_at', label: 'Created At' },
 ]
 
@@ -69,7 +69,7 @@ const filterConfig = computed(() => {
   return columns
     .filter(col => !['id'].includes(col.key)) 
     .map(col => {
-      if (col.key === "role_id") {
+      if (col.key === "role") {
         return {
           key: "role_id",
           label: "Role",

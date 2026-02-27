@@ -6,30 +6,27 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Resources\UserResource;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Services\UserService;
 
 
 
 class UserController extends Controller
 {
+    protected UserService $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     public function index(Request $request)
     {
-        $query = User::query()->with('role:id,name')->where('id', '!=', auth()->id());
-        $perPage = $request->get('per_page', 10); 
+        $perPage = $request->get('per_page', 10);
         $filters = $request->input('filter', []);
 
-        foreach ($filters as $field => $value) {
-        if ($field === 'created_at') {
-            $query->whereDate($field, $value);
-        } elseif ($field === 'role_id') {
-            $query->where($field, $value);
-        } else {
-            $query->where($field, 'like', "%{$value}%");
-        }
-        }
-
-        // $query->orderBy($sortBy, $sortDir);
-
-        $users = $query->paginate($perPage);
+        $users = $this->userService->getUsers($filters, $perPage);
 
         return response()->json([
             'status' => true,
@@ -43,5 +40,36 @@ class UserController extends Controller
             ]
         ]);     
 
+    }
+
+    public function store(StoreUserRequest $request)
+    {
+        $user = $this->userService->createUser($request->validated());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'User created successfully',
+            'data' => new UserResource($user)
+        ], 201);
+    }
+
+    public  function show(User $user)
+    {
+        return response()->json([
+            'status' => true,
+            'message' => 'User fetched successfully',
+            'data' => new UserResource($user)
+        ]);
+    }
+
+    public function update(UpdateUserRequest $request, User $user)
+    {
+        $updatedUser = $this->userService->updateUser($user, $request->validated());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'User updated successfully',
+            'data' => new UserResource($updatedUser)
+        ]);
     }
 }

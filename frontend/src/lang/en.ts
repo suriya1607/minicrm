@@ -1,3 +1,5 @@
+import Setpassword from "@/views/auth/Setpassword.vue";
+
 export default {
   common: {
     appname: "Fi CRM",
@@ -17,15 +19,18 @@ export default {
   auth: {
     login: "Login",
     register: "Register",
+    setpassword: "Set Password",
     name: "Full Name",
     phone: "Phone Number",
     email: "Email",
     password: "Password",
+    confirm_password: "Confirm Password",
     haveAccount: "Already have an account?",
     noAccount: "Don't have an account?",
     forgotPass: "Forgot your password?",
     usercreate: "Create User",
-    useredit: "Edit User"
+    useredit: "Edit User",
+    role: "Role"
   },
   messages: {
     loginError: "Invalid email or password",
