@@ -49,7 +49,19 @@
             <RefreshCw class="w-5 h-5 text-gray-600" />
           </button>
           <div class="w-9 h-9 bg-gray-300 rounded-full flex items-center justify-center">
-            <span class="text-sm font-semibold text-gray-700">{{ user?.name ? user.name.slice(0, 2).toUpperCase() : 'AD' }}</span>
+            <img
+              v-if="user?.avatar"
+              :src="user.avatar"
+              alt="avatar"
+              class="w-full h-full object-cover"
+            />
+
+          <span
+            v-else
+            class="text-sm font-semibold text-gray-700"
+          >
+            {{ user?.name ? user.name.slice(0,2).toUpperCase() : 'U' }}
+          </span>
           </div>
         </div>
       </header>
@@ -76,6 +88,7 @@ interface User {
   name: string
   email?: string
   role_id?: number
+  avatar?: string
   // add other fields if needed
 }
 const loading = ref(false)
@@ -101,7 +114,7 @@ const navItems = computed(() => {
 
   if (user.value.role_id == adminRole) return adminNav
   if (user.value.role_id == userRole) return userNav
-  // if (user.value.role_id === managerRole) return managerNav
+  if (user.value.role_id === managerRole) return adminNav
 
   return []
 })
@@ -111,6 +124,7 @@ provide('loading', loading)
 
 onMounted(() => {
   const storedUser = localStorage.getItem('user')
+  console.log('AppLayout mounted, storedUser:', storedUser)
   if (storedUser) {
     try {
       user.value = JSON.parse(storedUser)

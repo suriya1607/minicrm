@@ -1,4 +1,5 @@
 import Setpassword from "@/views/auth/Setpassword.vue";
+import { Upload } from "lucide-vue-next";
 
 export default {
   common: {
@@ -14,7 +15,10 @@ export default {
     savechanges: "Save Changes",
     changepass: "Change Password",
     adduser: "Add User",
-    addcustomer: "Add Customer"
+    addcustomer: "Add Customer",
+    opencam: "Open Camera",
+    takephoto: "Take Photo",
+    upload: "Upload"
   },
   auth: {
     login: "Login",

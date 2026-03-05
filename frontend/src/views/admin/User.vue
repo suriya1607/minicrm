@@ -19,6 +19,7 @@
       { label: 'Edit', key: 'edit' , route: `/admin/users/${row.id}/edit`},
       { label: 'Delete', key: 'delete', danger: true }
     ]"
+    @action="handleTableAction"
   />
 </template>
 
@@ -36,6 +37,8 @@ import t from "@/lang/en";
 import { ref,onMounted, onBeforeUnmount,inject,computed,watch} from 'vue'
 import type { Ref } from 'vue'
 import api from "@/api/axios";
+import { useToast } from "vue-toastification";
+import { deleteUser } from "@/services/api.ts";
 
 
 interface User {
@@ -55,6 +58,7 @@ const totalPages = ref(1)
 const filters = ref({})
 
 const roles = ref([]);
+const toast = useToast();
 
 const columns = [
   { key: 'id', label: 'ID' },
@@ -174,6 +178,23 @@ const fetchRoles = async () => {
 
   } catch (error) {
     console.error("Error fetching roles:", error);
+  }
+}
+
+const handleTableAction = async ({ action, row }: any) => {
+  if (action === "delete") {
+    if (!confirm("Are you sure you want to delete this user?")) {
+      return
+    }
+  }
+
+  try {
+    const res = await deleteUser(row.id)
+    toast.success(res.message)
+    fetchUserData(page.value) // Refresh data after action
+  } catch (error) {
+    console.error(error)
+    toast.error("Something went wrong")
   }
 }
 

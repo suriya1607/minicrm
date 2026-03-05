@@ -96,4 +96,27 @@ class AuthController extends Controller
             return response()->json(['message' => 'Invalid token'], 400);
         }
     }
+
+    public function updateProfile(Request $request)
+    {
+        $user = $request->user();
+
+        $data = $request->validate([
+            'name' => 'sometimes|required|string',
+            'phone' => 'sometimes|required|string',
+            'image' => 'sometimes|nullable|image|max:2048',
+        ]);
+
+        if (isset($data['image']) && $data['image'] instanceof \Illuminate\Http\UploadedFile) {
+            $user->addMedia($data['image'])->toMediaCollection(User::MEDIA_COLLECTION);
+        }
+        if ($request->remove_avatar) {
+            $user->clearMediaCollection(User::MEDIA_COLLECTION);
+        }
+        unset($data['image']);
+
+        $user->update($data);
+
+        return response()->json(['message' => 'Profile updated successfully', 'user' => $user]);
+    }
 }

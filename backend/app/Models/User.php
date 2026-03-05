@@ -8,19 +8,27 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail,HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens,HasFactory, Notifiable;
+    use HasApiTokens,HasFactory, Notifiable,InteractsWithMedia, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
+
+    const MEDIA_COLLECTION = 'avatar';
+    protected $appends = ['avatar'];
+
+
     protected $fillable = [
         'name',
         'email',
@@ -37,6 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'media'
     ];
 
     /**
@@ -55,5 +64,16 @@ class User extends Authenticatable implements MustVerifyEmail
         public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+        public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+            ->singleFile();
+    }
+
+        public function getAvatarAttribute()
+    {
+        return $this->getFirstMediaUrl(self::MEDIA_COLLECTION);
     }
 }

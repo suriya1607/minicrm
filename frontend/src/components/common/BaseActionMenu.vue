@@ -1,23 +1,44 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue"
 import { useRouter } from "vue-router"
+import api from "@/api/axios";
+import { useToast } from "vue-toastification"
 
 const router = useRouter()
+const toast = useToast()
 
-const handleAction = (action: ActionItem) => {
-  if (action.route) {
-    router.push(action.route)
-  } else {
-    emit("action", { action: action.key, row: props.row })
+const handleAction = async (action: ActionItem) => {
+  try {
+
+    // Route action
+    if (action.route) {
+      await router.push(action.route)
+      return
+    }
+
+    // Default emit
+    emit("action", {
+      action: action.key,
+      row: props.row
+    })
+
+  } finally {
+
+    close()
+
   }
-  close()
 }
+
 
 interface ActionItem {
   label: string
   key: string
   danger?: boolean
   route?: string
+  api?: {
+    method: string
+    url: string
+  }
 }
 
 const props = defineProps<{

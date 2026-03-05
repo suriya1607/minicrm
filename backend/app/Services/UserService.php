@@ -49,4 +49,9 @@ class UserService
 
         return $user;
     }
+
+    public function deleteUser(User $user)
+    {
+        $user->delete();
+    }
 }

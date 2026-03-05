@@ -25,3 +25,18 @@ export const fetchUser = async (url: string) => {
   return res.data.data
 }
 
+export const updateProfile = async (data: any) => {
+  const res = await api.post('/profile/update', data, {
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  });
+
+  return res.data;
+}
+
+export const deleteUser = async (id: string | number) => {
+  const res = await api.delete(`/users/${id}`);
+  return res.data;
+}
+

@@ -32,6 +32,8 @@ Route::get('/email/verify/{id}/{hash}', function ($id, $hash, Request $request) 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
+    Route::post('profile/update', [AuthController::class, 'updateProfile']);
     Route::resource('users', UserController::class);
     Route::get('/roles', [RoleController::class, 'index']);
+
 });

@@ -72,4 +72,14 @@ class UserController extends Controller
             'data' => new UserResource($updatedUser)
         ]);
     }
+
+    public function destroy(User $user)
+    {
+        $this->userService->deleteUser($user);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'User deleted successfully'
+        ]);
+    }
 }
