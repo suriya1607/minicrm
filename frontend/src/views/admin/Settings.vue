@@ -8,10 +8,6 @@
       <h2 class="text-xl font-semibold text-gray-800">
         Profile & Settings
       </h2>
-
-      <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-        Settings Password
-      </button>
     </div>
 
     <!-- Avatar -->
@@ -100,7 +96,12 @@
 
     <canvas ref="canvas" class="hidden"></canvas>
 
+    <ChangePassword v-if="showChangePassword"
+      @cancel="showChangePassword = false"
+/>
+
     <!-- Form -->
+    <div v-else>
     <div class="mb-4">
 
       <BaseInput
@@ -123,13 +124,14 @@
         {{ t.button.savechanges }}
       </BaseButton>
 
-      <BaseButton
+      <BaseButton @click="changepass"
         type="button"
         class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300"
       >
         {{ t.button.changepass }}
       </BaseButton>
 
+    </div>
     </div>
 
   </div>
@@ -143,6 +145,7 @@ import type { Ref } from "vue"
 
 import BaseInput from "@/components/common/BaseInput.vue"
 import BaseButton from "@/components/common/BaseButton.vue"
+import ChangePassword from "@/components/common/ChangePassword.vue"
 import {updateProfile} from "@/services/api.ts";
 
 import {useToast} from "vue-toastification";
@@ -166,6 +169,8 @@ const toast = useToast()
 const showModal = ref(false)
 const cameraOn = ref(false)
 const removeAvatar = ref(false)
+const showChangePassword = ref(false)
+
 
 
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -311,6 +316,10 @@ const submitProfile = async () => {
     console.error(error)
   } 
 
+}
+
+const changepass = () => {
+  showChangePassword.value = true
 }
 
 onUnmounted(() => stopCamera())

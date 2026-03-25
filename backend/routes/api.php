@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\ContactController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -33,7 +34,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('profile/update', [AuthController::class, 'updateProfile']);
+    Route::post('/updatepassword', [AuthController::class, 'updatePassword']);
     Route::resource('users', UserController::class);
     Route::get('/roles', [RoleController::class, 'index']);
+    Route::resource('contacts', ContactController::class);
+
 
 });

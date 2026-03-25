@@ -10,6 +10,8 @@ import Users from '@/views/admin/User.vue'
 import UserCreate from '@/views/admin/users/UserCreate.vue'
 // import UserDashboard from '@/views/user/UserDashboard.vue'
 // import UserProfile from '@/views/user/UserProfile.vue'
+import Contacts     from '@/views/admin/Contacts.vue'
+import ContactCreate from '@/views/admin/contacts/ContactCreate.vue'
 
 
 
@@ -30,6 +32,9 @@ const routes: Array<RouteRecordRaw> = [
       { path: 'users', name: 'admin-User', component: Users },
       { path: 'users/create', component: UserCreate },
       { path: 'users/:id/edit', component: UserCreate },
+      { path: 'contacts', name: 'admin-Contacts', component: Contacts },
+      { path: 'contacts/create', component: ContactCreate },
+      { path: 'contacts/:id/edit', component: ContactCreate },
     ]
   },
 

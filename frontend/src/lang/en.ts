@@ -6,7 +6,10 @@ export default {
     appname: "Fi CRM",
     loading: "Loading...",
     error: "Something went wrong.",
-    success: "Operation successful."
+    success: "Operation successful.",
+    oldpass: "Old Password",
+    newpass: "New Password",
+    confirmpass: "Confirm New Password",
   },
   button: {
     submit: "Submit",
@@ -18,7 +21,8 @@ export default {
     addcustomer: "Add Customer",
     opencam: "Open Camera",
     takephoto: "Take Photo",
-    upload: "Upload"
+    upload: "Upload",
+    updatepass: "Update Password"
   },
   auth: {
     login: "Login",

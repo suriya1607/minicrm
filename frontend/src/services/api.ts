@@ -40,3 +40,29 @@ export const deleteUser = async (id: string | number) => {
   return res.data;
 }
 
+export const updatePassword = async (data: any) => {
+  const res = await api.post('/updatepassword', data);
+  return res.data;
+}
+
+// contacts
+
+export const createContact = async (data: any) => {
+  const res = await api.post('/contacts', data);
+  return res.data;
+};
+
+export const updateContact = async (id: string | number, data: any) => {
+  const res = await api.put(`/contacts/${id}`, data);
+  return res.data;
+};
+
+export const fetchContact = async (id: string | number) => {
+  const res = await api.get(`/contacts/${id}`);
+  return res.data.data;
+};
+
+export const deleteContact = async (id: string | number) => {
+  const res = await api.delete(`/contacts/${id}`);
+  return res.data;
+};

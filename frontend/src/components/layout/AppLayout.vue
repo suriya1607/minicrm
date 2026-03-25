@@ -82,7 +82,7 @@ import t from "@/lang/en";
 import BaseLoader from "@/components/common/BaseLoader.vue";
 
 // Import icons from Lucide Vue (same as React)
-import { LayoutDashboard, Users, FileText, Calendar, BarChart3, Settings, Bell, MessageCircle, RefreshCw } from 'lucide-vue-next'
+import { LayoutDashboard, Users, FileText, Calendar, BarChart3, BookUser,Settings, Bell, MessageCircle, RefreshCw } from 'lucide-vue-next'
 
 interface User {
   name: string
@@ -101,6 +101,7 @@ const user = ref<User | null>(null)
 const adminNav = [
   { path: '/admin/dashboard',icon: LayoutDashboard, label: 'Dashboard' },
   { path: '/admin/users', icon: Users, label: 'Users' },
+  { path: '/admin/contacts', icon: BookUser, label: 'Contacts' },
   { path: '/admin/settings', icon: Settings, label: 'Settings' },
 ];
 
