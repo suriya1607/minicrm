@@ -67,6 +67,11 @@ MAIL_FROM_NAME="${APP_NAME}"
 php artisan migrate
 php artisan serve
 
+## 🗂️ Database Schema
+
+Below is the database structure of the CRM system:
+
+(public/schema/crm-schema.jpg)
 
 Frontend Setup (Vue.js)
 cd frontend
