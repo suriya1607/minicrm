@@ -12,6 +12,13 @@ import UserCreate from '@/views/admin/users/UserCreate.vue'
 // import UserProfile from '@/views/user/UserProfile.vue'
 import Contacts     from '@/views/admin/Contacts.vue'
 import ContactCreate from '@/views/admin/contacts/ContactCreate.vue'
+import ContactView from '@/views/admin/contacts/ContactView.vue'
+import Leads      from '@/views/admin/Leads.vue'
+import LeadCreate from '@/views/admin/leads/LeadCreate.vue'
+import LeadView   from '@/views/admin/leads/LeadView.vue'
+import Deals      from '@/views/admin/Deals.vue'
+import DealCreate from '@/views/admin/deals/DealCreate.vue'
+import DealView   from '@/views/admin/deals/DealView.vue'
 
 
 
@@ -35,6 +42,15 @@ const routes: Array<RouteRecordRaw> = [
       { path: 'contacts', name: 'admin-Contacts', component: Contacts },
       { path: 'contacts/create', component: ContactCreate },
       { path: 'contacts/:id/edit', component: ContactCreate },
+      { path: 'contacts/:id', component: ContactView },
+      { path: 'leads',            name: 'admin-Leads', component: Leads },
+      { path: 'leads/create',     component: LeadCreate },
+      { path: 'leads/:id',        component: LeadView },
+      { path: 'leads/:id/edit',   component: LeadCreate },
+      { path: 'deals',          name: 'admin-Deals', component: Deals },
+      { path: 'deals/create',   component: DealCreate },
+      { path: 'deals/:id',      component: DealView },
+      { path: 'deals/:id/edit', component: DealCreate },
     ]
   },
 

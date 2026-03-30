@@ -39,14 +39,14 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, computed, onMounted, watch } from 'vue'
+import { reactive, computed, onMounted, watch ,ref} from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import BaseBreadCrump from '@/components/common/BaseBreadCrump.vue'
 import BaseInput from '@/components/common/BaseInput.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
 import { isRequired, isValidEmail } from '@/helpers/validators'
-import { createContact, updateContact, fetchContact } from '@/services/api'
+import { createContact, updateContact, fetchContact , fetchUsers} from '@/services/api'
 
 const router = useRouter()
 const route  = useRoute()
@@ -54,6 +54,8 @@ const toast  = useToast()
 
 const isEdit    = computed(() => !!route.params.id)
 const contactId = computed(() => route.params.id as string)
+const users = ref<{ label: string; value: number }[]>([])
+
 
 const breadcrumbItems = computed(() => [
   { label: 'Contacts', link: '/admin/contacts' },
@@ -80,6 +82,7 @@ const fields = [
   { name: 'email',   label: 'Email',       type: 'text',   placeholder: 'Enter email' },
   { name: 'phone',   label: 'Phone',       type: 'text',   placeholder: 'Enter phone number' },
   { name: 'company', label: 'Company',     type: 'text',   placeholder: 'Enter company name' },
+  { name: 'assigned_to', label: 'Assign To', type: 'select', options: users.value },
   {
     name: 'status', label: 'Status', type: 'select',
     options: [
@@ -120,6 +123,9 @@ const submitForm = async () => {
 }
 
 onMounted(async () => {
+    users.value = await fetchUsers()
+    console.log(users.value,'dsfsdfs');
+
   if (isEdit.value) {
     const contact = await fetchContact(contactId.value)
     Object.assign(form, {

@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\LeadController;
+use App\Http\Controllers\Api\DealController;
+
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -38,6 +41,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('users', UserController::class);
     Route::get('/roles', [RoleController::class, 'index']);
     Route::resource('contacts', ContactController::class);
+    Route::resource('leads', LeadController::class);
+    Route::post('leads/{lead}/convert', [LeadController::class, 'convert']);
+    Route::resource('deals', DealController::class);
+    Route::patch('deals/{deal}/move', [DealController::class, 'move']);
 
 
 });
