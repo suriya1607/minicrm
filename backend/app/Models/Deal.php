@@ -39,4 +39,14 @@ class Deal extends Model
     {
         return $this->belongsTo(User::class, 'assigned_to');
     }
+
+    public function tasks()
+    {
+        return $this->morphMany(Task::class, 'taskable')->orderBy('due_date');
+    }
+
+    public function activities()
+    {
+        return $this->morphMany(Activity::class, 'subject')->orderBy('created_at', 'desc');
+    }
 }

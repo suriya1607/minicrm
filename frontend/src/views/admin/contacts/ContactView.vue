@@ -99,7 +99,16 @@
     <!-- Activity Timeline placeholder (Sprint 4) -->
     <div class="bg-white rounded-lg shadow p-6">
       <h3 class="text-lg font-semibold text-gray-800 mb-2">Activity Timeline</h3>
-      <p class="text-sm text-gray-400">Activities will appear here in Sprint 4.</p>
+        <TasksSection
+        :subject-type="'Contact'"
+        :subject-id="contact?.id ?? 0"
+        />
+
+      <ActivityTimeline
+        :subject-type="'Contact'"
+        :subject-id="contact?.id ?? 0"
+      />
+
     </div>
 
   </div>
@@ -111,6 +120,8 @@ import { useRoute, useRouter } from 'vue-router'
 import BaseBreadCrump from '@/components/common/BaseBreadCrump.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
 import api from '@/api/axios'
+import TasksSection      from '@/components/common/TasksSection.vue'
+import ActivityTimeline  from '@/components/common/ActivityTimeline.vue'
 
 const route = useRoute()
 const router = useRouter()

@@ -19,6 +19,8 @@ import LeadView   from '@/views/admin/leads/LeadView.vue'
 import Deals      from '@/views/admin/Deals.vue'
 import DealCreate from '@/views/admin/deals/DealCreate.vue'
 import DealView   from '@/views/admin/deals/DealView.vue'
+import Tasks from '@/views/admin/Tasks.vue'
+
 
 
 
@@ -33,7 +35,8 @@ const routes: Array<RouteRecordRaw> = [
     component: AppLayout,
     meta: { requiresAuth: true, role: 1 },
     children: [
-      { path: 'dashboard', component: Dashboard },
+      { path: 'dashboard', name: 'admin-Dashboard', component: () => import('@/views/admin/Dashboard.vue') },
+
       { path: 'customers', component: Customers },
       { path: 'settings', component: Settings },
       { path: 'users', name: 'admin-User', component: Users },
@@ -51,6 +54,8 @@ const routes: Array<RouteRecordRaw> = [
       { path: 'deals/create',   component: DealCreate },
       { path: 'deals/:id',      component: DealView },
       { path: 'deals/:id/edit', component: DealCreate },
+      { path: 'tasks', name: 'admin-Tasks', component: Tasks },
+
     ]
   },
 

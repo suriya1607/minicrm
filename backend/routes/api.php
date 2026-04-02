@@ -10,6 +10,10 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\LeadController;
 use App\Http\Controllers\Api\DealController;
+use App\Http\Controllers\Api\TaskController;
+use App\Http\Controllers\Api\ActivityController;
+use App\Http\Controllers\Api\StatsController;
+
 
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -45,6 +49,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('leads/{lead}/convert', [LeadController::class, 'convert']);
     Route::resource('deals', DealController::class);
     Route::patch('deals/{deal}/move', [DealController::class, 'move']);
+    Route::resource('tasks', TaskController::class);
+    Route::apiResource('activities', ActivityController::class)->only(['index', 'store']);
+    Route::get('stats', [StatsController::class, 'index']);
+
 
 
 });

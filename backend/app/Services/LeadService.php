@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Services;
+use App\Services\ActivityService;
 
 use App\Models\Lead;
 
 class LeadService
 {
+    public function __construct(protected ActivityService $activityService) {}
+
     public function getLeads(array $filters, int $perPage)
     {
         $query = Lead::query()
@@ -44,6 +47,8 @@ class LeadService
 
     public function convertToDeal(Lead $lead, array $dealData): \App\Models\Deal
     {
+        $this->activityService->log($lead, 'converted', 'Lead converted to deal');
+        $this->activityService->log($deal, 'created', 'Deal created from lead');
         $lead->update(['stage' => 'qualified']);
 
         return $lead->deal()->create([

@@ -48,7 +48,7 @@
           <button class="p-2 hover:bg-gray-100 rounded-full">
             <RefreshCw class="w-5 h-5 text-gray-600" />
           </button>
-          <div class="w-9 h-9 bg-gray-300 rounded-full flex items-center justify-center">
+          <!-- <div class="w-9 h-9 bg-gray-300 rounded-full flex items-center justify-center">
             <img
               v-if="user?.avatar"
               :src="user.avatar"
@@ -62,7 +62,49 @@
           >
             {{ user?.name ? user.name.slice(0,2).toUpperCase() : 'U' }}
           </span>
-          </div>
+          </div> -->
+          <div class="relative">
+  <button
+    @click="toggleProfileMenu"
+    class="w-9 h-9 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden"
+  >
+    <img
+      v-if="user?.avatar"
+      :src="user.avatar"
+      alt="avatar"
+      class="w-full h-full object-cover"
+    />
+
+    <span
+      v-else
+      class="text-sm font-semibold text-gray-700"
+    >
+      {{ user?.name ? user.name.slice(0,2).toUpperCase() : 'U' }}
+    </span>
+  </button>
+
+  <!-- Dropdown -->
+  <div
+    v-if="showProfileMenu"
+    class="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg border z-50"
+  >
+    <RouterLink
+      to="/admin/settings"
+      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+      @click="showProfileMenu = false"
+    >
+      My Profile
+    </RouterLink>
+
+    <button
+      @click="logout"
+      class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+    >
+      Logout
+    </button>
+  </div>
+</div>
+          
         </div>
       </header>
 
@@ -76,13 +118,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref,onMounted,provide,computed} from 'vue'
+import { ref,onMounted,provide,computed,onUnmounted} from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import t from "@/lang/en";
 import BaseLoader from "@/components/common/BaseLoader.vue";
+import { useRouter } from 'vue-router'
+import api from '@/api/axios'
 
 // Import icons from Lucide Vue (same as React)
-import { LayoutDashboard, Users, FileText, Calendar, BarChart3, BookUser, TrendingUp, Settings, Bell, MessageCircle, RefreshCw, Handshake } from 'lucide-vue-next'
+import { LayoutDashboard, Users, FileText, Calendar, BarChart3, BookUser, TrendingUp, Settings, Bell, MessageCircle, RefreshCw, Handshake,CheckSquare } from 'lucide-vue-next'
 
 interface User {
   name: string
@@ -93,10 +137,13 @@ interface User {
 }
 const loading = ref(false)
 const route = useRoute()
+const router = useRouter()
 const adminRole = import.meta.env.VITE_ADMIN_ROLE;
 const userRole = import.meta.env.VITE_USER_ROLE;
 const managerRole = import.meta.env.VITE_MANAGER_ROLE;
 const user = ref<User | null>(null)
+const showProfileMenu = ref(false)
+
 
 const adminNav = [
   { path: '/admin/dashboard',icon: LayoutDashboard, label: 'Dashboard' },
@@ -104,6 +151,7 @@ const adminNav = [
   { path: '/admin/contacts', icon: BookUser, label: 'Contacts' },
   { path: '/admin/leads',    icon: TrendingUp,  label: 'Leads' },
   { path: '/admin/deals',    icon: Handshake,  label: 'Deals' },
+  { path: '/admin/tasks', icon: CheckSquare, label: 'Tasks' },
   { path: '/admin/settings', icon: Settings, label: 'Settings' },
 ];
 
@@ -122,10 +170,30 @@ const navItems = computed(() => {
   return []
 })
 
+const toggleProfileMenu = () => {
+  showProfileMenu.value = !showProfileMenu.value
+}
+
+const logout = async () => {
+  await api.post("/logout");
+  localStorage.removeItem("auth_token");
+  localStorage.removeItem("user");
+  router.push("/login");
+};
+
+const handleClickOutside = (event: MouseEvent) => {
+  const target = event.target as HTMLElement
+  if (!target.closest('.relative')) {
+    showProfileMenu.value = false
+  }
+}
+
 provide('user', user)
 provide('loading', loading)
 
 onMounted(() => {
+    document.addEventListener('click', handleClickOutside)
+
   const storedUser = localStorage.getItem('user')
   console.log('AppLayout mounted, storedUser:', storedUser)
   if (storedUser) {
@@ -135,6 +203,10 @@ onMounted(() => {
       console.error('Failed to parse user from localStorage')
     }
   }
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
 })
 
 </script>

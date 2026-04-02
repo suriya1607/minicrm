@@ -32,4 +32,14 @@ class Lead extends Model
     {
         return $this->hasOne(Deal::class);
     }
+    
+    public function tasks()
+    {
+        return $this->morphMany(Task::class, 'taskable')->orderBy('due_date');
+    }
+
+    public function activities()
+    {
+        return $this->morphMany(Activity::class, 'subject')->orderBy('created_at', 'desc');
+    }
 }

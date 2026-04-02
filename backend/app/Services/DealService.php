@@ -3,9 +3,13 @@
 namespace App\Services;
 
 use App\Models\Deal;
+use App\Services\ActivityService;
+
 
 class DealService
 {
+    public function __construct(protected ActivityService $activityService) {}
+
     public function getDeals(array $filters, int $perPage)
     {
         $query = Deal::query()
@@ -59,6 +63,8 @@ class DealService
 
     public function moveDeal(Deal $deal, string $stage): Deal
     {
+        $this->activityService->log($deal, 'stage_changed', "Deal moved to {$stage}");
+
         $deal->update(['stage' => $stage]);
         return $deal;
     }

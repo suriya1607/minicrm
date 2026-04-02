@@ -124,3 +124,35 @@ export const moveDeal = async (id: string | number, stage: string) => {
   const res = await api.patch(`/deals/${id}/move`, { stage });
   return res.data;
 };
+
+// task & activities 
+
+export const fetchTasks = async (params: any) => {
+  const res = await api.get('/tasks', { params });
+  return res.data;
+};
+
+export const createTask = async (data: any) => {
+  const res = await api.post('/tasks', data);
+  return res.data;
+};
+
+export const updateTask = async (id: number, data: any) => {
+  const res = await api.put(`/tasks/${id}`, data);
+  return res.data;
+};
+
+export const deleteTask = async (id: number) => {
+  const res = await api.delete(`/tasks/${id}`);
+  return res.data;
+};
+
+export const fetchActivities = async (params: any) => {
+  const res = await api.get('/activities', { params });
+  return res.data;
+};
+
+export const logActivity = async (data: any) => {
+  const res = await api.post('/activities', data);
+  return res.data;
+};

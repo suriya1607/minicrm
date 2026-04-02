@@ -70,7 +70,15 @@
     <!-- Activity placeholder -->
     <div class="bg-white rounded-lg shadow p-6">
       <h3 class="text-lg font-semibold text-gray-800 mb-2">Activity Timeline</h3>
-      <p class="text-sm text-gray-400">Activities will appear here in Sprint 4.</p>
+      <TasksSection
+        :subject-type="'Deal'"
+        :subject-id="deal?.id ?? 0"
+      />
+
+      <ActivityTimeline
+        :subject-type="'Deal'"
+        :subject-id="deal?.id ?? 0"
+      />
     </div>
   </div>
 </template>
